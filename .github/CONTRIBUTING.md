@@ -12,23 +12,17 @@ All work on React Native Modal happens directly on GitHub. Contributors send pul
 
 ### Development flow
 
-- Head into the `example` folder and do the same.
-- Head into `ios` and run `pod install` if you wish to compile under iOS
+- Follow the setup instructions in [the bare example](../examples/bare/README.md).
 - Get back into the root folder and launch `yarn run dev`. This will launch `ts` in watch mode.
-- Get into the `example` folder again and type `yarn run start`.
-- You can now open Android Studio or XCode directly from `example/android` or `example/ios` respectively, build
+- Get into the `examples/bare` folder again and type `yarn run start`.
+- You can now open Android Studio or Xcode from `examples/bare/android` or `examples/bare/ios` respectively, build
   and run the app.
 
 ## Tests & Verifications
 
-Currently we use `eslint` with `prettier` for linting and formatting the code.  
-We still don't have a test suite (it's a WIP).
-All of these are run on CircleCI for all opened pull requests, but you should use them locally when making changes.
-
-- `yarn test`: Run all tests and validations.
-- `yarn lint`: Run `eslint`.
-- `yarn test:ts`: Checks TypeScript
-- `yarn lint --fix`: Run `eslint` and automatically fix issues. This is useful for correcting code formatting.
+- Run `yarn test` to check TypeScript.
+- Run `yarn build` to compile the library for the bare example.
+- Run `npm pack --dry-run` to verify the npm package contents.
 
 ## Sending a pull request
 
@@ -54,7 +48,7 @@ We prefix our commit messages with one of the following to signify the kind of c
 
 ## Reporting issues
 
-You can report issues on our [bug tracker](https://github.com/react-native-community/react-native-modal/issues). Please search for existing issues and follow the issue template when opening an issue.
+Report issues on the [fork's issue tracker](https://github.com/hzlgit/react-native-modal/issues). Search for existing issues before opening a new one.
 
 ## License
 

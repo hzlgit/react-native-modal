@@ -1,20 +1,11 @@
-import {
-  BackHandlerStatic,
-  BackPressEventName,
-  NativeEventSubscription,
-  Platform,
-} from 'react-native';
+import { Platform } from 'react-native';
 
-const noopBackHandler: BackHandlerStatic = {
-  exitApp() {},
-  addEventListener(
-    eventName: BackPressEventName,
-    handler: () => boolean | null | undefined,
-  ): NativeEventSubscription {
-    return { remove: () => {} };
-  },
-  removeEventListener: () => {},
-};
+type BackHandlerSubscription = Pick<
+  typeof import('react-native').BackHandler,
+  'addEventListener'
+>;
 
-export const BackHandler: BackHandlerStatic =
-  Platform.OS === 'web' ? noopBackHandler : require('react-native').BackHandler;
+export const BackHandler: BackHandlerSubscription =
+  Platform.OS === 'web'
+    ? { addEventListener: () => ({ remove() {} }) }
+    : require('react-native').BackHandler;

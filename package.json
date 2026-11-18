@@ -1,5 +1,5 @@
 {
-  "name": "react-native-modal",
+  "name": "@hjzl/react-native-modal",
   "version": "14.0.0-rc.1",
   "description": "An enhanced React Native modal",
   "main": "dist/index.js",
@@ -8,10 +8,11 @@
     "dist/"
   ],
   "scripts": {
-    "test": "yarn run lint",
+    "test": "npm run test:ts",
     "build": "tsc",
     "dev": "tsc --watch",
-    "test:ts": "tsc --noEmit"
+    "test:ts": "tsc --noEmit",
+    "prepack": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -34,27 +35,35 @@
     "Anthony Cyrille"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/react-native-modal/react-native-modal",
+  "homepage": "https://github.com/hzlgit/react-native-modal#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-native-modal/react-native-modal"
-  },
-  "dependencies": {
-    "react-native-animatable": "1.4.0"
+    "url": "git+https://github.com/hzlgit/react-native-modal.git"
   },
   "devDependencies": {
-    "@types/react": "^19.0.10",
+    "@babel/core": "^7.25.2",
+    "@types/react": "^18.3.0",
     "husky": "^3.0.9",
     "postinstall": "^0.5.1",
-    "prettier": "^1.18.2",
+    "prettier": "2.8.8",
     "pretty-quick": "^2.0.0",
-    "react": "19.0.0",
+    "react": "18.3.1",
     "react-native": "0.76.7",
+    "react-native-reanimated": "3.17.5",
     "typescript": "5.8.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": ">=0.70.0"
+    "react-native": ">=0.70.0",
+    "react-native-reanimated": "^3.6.0 || ^4.0.0"
   },
-  "packageManager": "yarn@4.7.0"
+  "packageManager": "yarn@4.7.0",
+  "bugs": {
+    "url": "https://github.com/hzlgit/react-native-modal/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "next"
+  }
 }

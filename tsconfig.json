@@ -8,6 +8,7 @@
   ],
   "compilerOptions": {
     "lib": ["es5", "es6", "esnext.asynciterable"],
+    "types": ["react"],
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": false,
     "jsx": "react",

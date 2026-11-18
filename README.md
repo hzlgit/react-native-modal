@@ -1,22 +1,12 @@
-### Announcements
+# @hjzl/react-native-modal
 
-- 📣 We're looking for maintainers and contributors! See [#598](https://github.com/react-native-modal/react-native-modal/discussions/598)
-- 🙏 If you have a question, please [start a new discussion](https://github.com/react-native-modal/react-native-modal/discussions) instead of opening a new issue.
+A Reanimated-based fork of [react-native-modal](https://github.com/react-native-modal/react-native-modal).
 
-# react-native-modal
-
-[![npm version](https://badge.fury.io/js/react-native-modal.svg)](https://badge.fury.io/js/react-native-modal)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
-> If you're new to the React Native world, please notice that React Native itself offers a [<Modal /> component that works out-of-the-box](https://reactnative.dev/docs/modal).
+> React Native also offers a [<Modal /> component that works out-of-the-box](https://reactnative.dev/docs/modal).
 
 An enhanced, animated, customizable React Native modal.
 
 The goal of `react-native-modal` is expanding the original React Native `<Modal>` component by adding animations, style customization options, and new features, while still providing a simple API.
-
-<p align="center">
-<img src="/.github/images/example-modal.gif" height="500" />
-</p>
 
 ## Features
 
@@ -25,21 +15,27 @@ The goal of `react-native-modal` is expanding the original React Native `<Modal>
 - Customizable backdrop opacity, color and timing
 - Listeners for the modal animations ending
 - Resize itself correctly on device rotation
-- Swipeable
-- Scrollable
 
 ## Setup
 
-This library is available on npm, install it with: `npm i react-native-modal` or `yarn add react-native-modal`.
+Install the current prerelease and a compatible version of `react-native-reanimated` in your app.
+
+```sh
+npm install @hjzl/react-native-modal@next
+```
+
+Check the Reanimated compatibility table for your React Native version and architecture. This package accepts Reanimated 3.6 or later in the 3.x series, and Reanimated 4.x. [Reanimated 3 compatibility](https://docs.swmansion.com/react-native-reanimated/docs/3.x/guides/compatibility/) · [Reanimated 4 compatibility](https://docs.swmansion.com/react-native-reanimated/docs/guides/compatibility/)
+
+For bare React Native, put the Reanimated 3 Babel plugin (`react-native-reanimated/plugin`) or the Reanimated 4 Worklets plugin (`react-native-worklets/plugin`) last in your Babel plugins. Reanimated 4 also requires a compatible version of `react-native-worklets`. Follow the installation guide for your setup, then rebuild the app. [Reanimated 3 setup](https://docs.swmansion.com/react-native-reanimated/docs/3.x/) · [Reanimated 4 setup](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/)
 
 ## Usage
 
 Since `react-native-modal` is an extension of the [original React Native modal](https://reactnative.dev/docs/modal.html), it works in a similar fashion.
 
-1.  Import `react-native-modal`:
+1.  Import the scoped package.
 
 ```javascript
-import Modal from 'react-native-modal';
+import Modal from '@hjzl/react-native-modal';
 ```
 
 2.  Create a `<Modal>` component and nest its content inside of it:
@@ -86,7 +82,7 @@ Inside the modal there is another button that, when pressed, sets `isModalVisibl
 ```javascript
 import React, {useState} from 'react';
 import {Button, Text, View} from 'react-native';
-import Modal from 'react-native-modal';
+import Modal from '@hjzl/react-native-modal';
 
 function ModalTester() {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -113,7 +109,7 @@ function ModalTester() {
 export default ModalTester;
 ```
 
-For a more complex example take a look at the `/example` directory.
+See the [bare React Native example](./examples/bare) for a runnable app.
 
 ## Available props
 
@@ -134,28 +130,14 @@ For a more complex example take a look at the `/example` directory.
 | `children`                       | `node`               | **REQUIRED**                     | The modal content                                                                                                                          |
 | `deviceHeight`                   | `number`             | `null`                           | Device height (useful on devices that can hide the navigation bar)                                                                         |
 | `deviceWidth`                    | `number`             | `null`                           | Device width (useful on devices that can hide the navigation bar)                                                                          |
-| `isVisible`                      | `bool`               | **REQUIRED**                     | Show the modal?                                                                                                                            |
+| `isVisible`                      | `bool`               | `false`                          | Show the modal?                                                                                                                            |
 | `onBackButtonPress`              | `func`               | `() => null`                     | Called when the Android back button is pressed                                                                                             |
 | `onBackdropPress`                | `func`               | `() => null`                     | Called when the backdrop is pressed                                                                                                        |
 | `onModalWillHide`                | `func`               | `() => null`                     | Called before the modal hide animation begins                                                                                              |
-| `onModalHide`                    | `func`               | `() => null`                     | Called when the modal is completely hidden                                                                                                 |
+| `onModalHide`                    | `func`               | `() => null`                     | Called after the content and backdrop have finished exiting                                                                                                 |
 | `onModalWillShow`                | `func`               | `() => null`                     | Called before the modal show animation begins                                                                                              |
 | `onModalShow`                    | `func`               | `() => null`                     | Called when the modal is completely visible                                                                                                |
-| `onSwipeStart`                   | `func`               | `() => null`                     | Called when the swipe action started                                                                                                       |
-| `onSwipeMove`                    | `func`               | `(percentageShown) => null`      | Called on each swipe event                                                                                                                 |
-| `onSwipeComplete`                | `func`               | `({ swipingDirection }) => null` | Called when the `swipeThreshold` has been reached                                                                                          |
-| `onSwipeCancel`                  | `func`               | `() => null`                     | Called when the `swipeThreshold` has not been reached                                                                                      |
-| `panResponderThreshold`          | `number`             | `4`                              | The threshold for when the panResponder should pick up swipe events                                                                        |
-| `scrollOffset`                   | `number`             | `0`                              | When > 0, disables swipe-to-close, in order to implement scrollable content                                                                |
-| `scrollOffsetMax`                | `number`             | `0`                              | Used to implement overscroll feel when content is scrollable. See `/example` directory                                                     |
-| `scrollTo`                       | `func`               | `null`                           | Used to implement scrollable modal. See `/example` directory for reference on how to use it                                                |
-| `scrollHorizontal`               | `bool`               | `false`                          | Set to true if your scrollView is horizontal (for a correct scroll handling)                                                               |
-| `swipeThreshold`                 | `number`             | `100`                            | Swiping threshold that when reached calls `onSwipeComplete`                                                                                |
-| `swipeDirection`                 | `string` or `array`  | `null`                           | Defines the direction where the modal can be swiped. Can be 'up', 'down', 'left, or 'right', or a combination of them like `['up','down']` |
-| `useNativeDriver`                | `bool`               | `false`                          | Defines if animations should use native driver                                                                                             |
-| `useNativeDriverForBackdrop`     | `bool`               | `null`                           | Defines if animations for backdrop should use native driver (to avoid flashing on android)                                                 |
-| `hideModalContentWhileAnimating` | `bool`               | `false`                          | Enhances the performance by hiding the modal content until the animations complete                                                         |
-| `propagateSwipe`                 | `bool` or `func`     | `false`                          | Allows swipe events to propagate to children components (eg a ScrollView inside a modal)                                                   |
+| `hideModalContentWhileAnimating` | `bool`               | `false`                          | Unmounts the modal children during the enter and exit animations                                                         |
 | `style`                          | `any`                | `null`                           | Style applied to the modal                                                                                                                 |
 
 ## Frequently Asked Questions
@@ -210,29 +192,6 @@ The prop `onBackdropPress` allows you to handle this situation:
 </Modal>
 ```
 
-### How can I hide the modal by swiping it?
-
-The prop `onSwipeComplete` allows you to handle this situation (remember to set `swipeDirection` too!):
-
-```javascript
-<Modal
-  isVisible={isModalVisible}
-  onSwipeComplete={() => setModalVisible(false)}
-  swipeDirection="left">
-  <View style={{flex: 1}}>
-    <Text>I am the modal content!</Text>
-  </View>
-</Modal>
-```
-
-Note that when using `useNativeDriver={true}` the modal won't drag correctly. This is a [known issue](https://github.com/react-native-community/react-native-modal/issues/163#issuecomment-409760695).
-
-### The modal flashes in a weird way when animating
-
-Unfortunately this is a [known issue](https://github.com/react-native-community/react-native-modal/issues/92) that happens when `useNativeDriver=true` and must still be solved.  
-In the meanwhile as a workaround you can set the `hideModalContentWhileAnimating` prop to `true`: this seems to solve the issue.
-Also, do not assign a `backgroundColor` property directly to the Modal. Prefer to set it on the child container.
-
 ### The modal background doesn't animate properly
 
 Are you sure you named the `isVisible` prop correctly? Make sure it is spelled correctly: `isVisible`, not `visible`.
@@ -267,16 +226,6 @@ If you want the modal to cover the entire screen you can easily override it this
 ```js
 <Modal style={{margin: 0}}>...</Modal>
 ```
-
-### I can't scroll my ScrollView inside of the modal
-
-Enable propagateSwipe to allow your child components to receive swipe events:
-
-```js
-<Modal propagateSwipe>...</Modal>
-```
-
-Please notice that this is still a WIP fix and might not fix your issue yet, see [issue #236](https://github.com/react-native-community/react-native-modal/issues/236).
 
 ### The modal enter/exit animation flickers
 
@@ -313,7 +262,30 @@ You can provide an event handler to the custom backdrop element to dismiss the m
 
 ## Available animations
 
-Take a look at [react-native-animatable](https://github.com/oblador/react-native-animatable) to see the dozens of animations available out-of-the-box. You can also pass in custom animation definitions and have them automatically register with react-native-animatable. For more information on creating custom animations, see the react-native-animatable [animation definition schema](https://github.com/oblador/react-native-animatable#animation-definition-schema).
+The existing animation names, including `slideInUp`, `slideOutDown`, `fadeIn`, `fadeOut`, `zoomIn`, and `zoomOut`, are supported. See the [preset definitions](./src/animation-presets.ts) for the full list.
+
+You can also pass an object to `animationIn` or `animationOut` with at least two keyframes. Use `from` and `to`, or numeric progress keys from `0` to `1`. You can add an `easing` function or name and a `style` shared across keyframes.
+
+```tsx
+<Modal
+  isVisible={isVisible}
+  animationIn={{
+    from: {opacity: 0, scale: 0.95},
+    0.7: {opacity: 1},
+    to: {opacity: 1, scale: 1},
+  }}
+  animationOut="fadeOut">
+  {children}
+</Modal>
+```
+
+## Migrating from the gesture-enabled version
+
+Remove `swipeDirection`, `swipeThreshold`, `panResponderThreshold`, the `onSwipe*` callbacks, and the props that coordinated gestures with scrollable children (`propagateSwipe`, `scrollOffset`, `scrollOffsetMax`, `scrollTo`, `scrollHorizontal`). A `ScrollView` or `FlatList` inside the modal scrolls normally. To dismiss the modal, update `isVisible` from your close button, `onBackdropPress`, or `onBackButtonPress`.
+
+Remove `useNativeDriver` and `useNativeDriverForBackdrop`. Reanimated runs the animations on the UI thread.
+
+Use the `isVisible` prop to control the function component. If your app used a ref to the previous class instance, migrate that logic to props and lifecycle callbacks.
 
 ## Alternatives
 

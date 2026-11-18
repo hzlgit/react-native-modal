@@ -1,23 +1,32 @@
 const path = require('path');
-const {makeMetroConfig} = require('@rnx-kit/metro-config');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
-module.exports = makeMetroConfig({
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: false,
-      },
-    }),
-  },
+const libraryDist = path.resolve(__dirname, '../../dist');
+const appEntry = path.join(__dirname, 'index.js');
+const sharedDependency =
+  /^(@babel\/runtime|react|react-native|react-native-reanimated|react-native-worklets)(\/|$)/;
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), {
+  watchFolders: [libraryDist],
   resolver: {
-    enableSymlinks: true,
-    extraNodeModules: {
-      'react-native-modal': path.resolve(__dirname, '../../dist/'),
+    resolveRequest(context, moduleName, platform) {
+      if (moduleName === '@hjzl/react-native-modal') {
+        return {
+          type: 'sourceFile',
+          filePath: path.join(libraryDist, 'index.js'),
+        };
+      }
+
+      const fromLibrary = context.originModulePath.startsWith(
+        libraryDist + path.sep,
+      );
+      return context.resolveRequest(
+        fromLibrary && sharedDependency.test(moduleName)
+          ? { ...context, originModulePath: appEntry }
+          : context,
+        moduleName,
+        platform,
+      );
     },
   },
-  watchFolders: [
-    path.join(__dirname, 'node_modules', 'react-native-modal'),
-    path.resolve(__dirname, '../..'),
-  ],
 });

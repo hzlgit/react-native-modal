@@ -1,8 +1,21 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+The example uses React Native 0.88.1, React 19.3.0, Reanimated 4.7.2, and Worklets 0.13.1. Check the Node.js requirement in `package.json` before installing dependencies.
+
+The app groups the basic modal, scrollable list, and keyboard form examples under **Interaction**. Under **Animations**, select vertical slide, horizontal slide, fade, zoom, bounce, flip, light speed, or custom keyframes. Open and close the card to see both animations in each pair.
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+
+From the repository root, build the local modal package and install the example dependencies.
+
+```sh
+corepack yarn install
+corepack yarn build
+cd examples/bare
+corepack yarn install
+```
 
 ## Step 1: Start Metro
 
